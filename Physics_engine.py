@@ -8,7 +8,7 @@ class PhysicsSimulator:
         self.pockets = pockets
         self.pocket_radius = pocket_radius
 
-    def run_shot(self, white_ball, black_ball, my_balls, opponent_balls, angle_deg, force_percent):
+    def run_shot(self, white_ball, black_ball, my_balls, opponent_balls, angle_deg, force_percent, display=False, screen=None, clock=None):
         """
         Input:  Balls positions and states, angle and force of the strike
         Output:  Balls positions and states updated
@@ -28,8 +28,9 @@ class PhysicsSimulator:
             wall.elasticity = 0.9 # Les bandes rebondissent bien
         space.add(*walls)
 
-        # Generating balls physics
-        def add_physics_ball(ball_obj):
+        # Generating balls
+        body_colors = {}
+        def add_physics_ball(ball_obj, color):
             if ball_obj.is_potted:
                 return None 
             body = pymunk.Body(1.0, pymunk.moment_for_circle(1.0, 0, 10.0))
@@ -37,12 +38,13 @@ class PhysicsSimulator:
             shape = pymunk.Circle(body, 10.0)
             shape.elasticity = 0.95
             space.add(body, shape)
+            body_colors[body] = color
             return body
 
-        white_body = add_physics_ball(white_ball)
-        black_body = add_physics_ball(black_ball)
-        my_bodies = [(b, add_physics_ball(b)) for b in my_balls]
-        opponent_bodies = [(b, add_physics_ball(b)) for b in opponent_balls]
+        white_body = add_physics_ball(white_ball, (255, 255, 255))
+        black_body = add_physics_ball(black_ball, (30, 30, 30))
+        my_bodies = [(b, add_physics_ball(b, (50, 150, 255))) for b in my_balls] # Blue
+        opponent_bodies = [(b, add_physics_ball(b, (255, 50, 50))) for b in opponent_balls] # Red
 
         # Generating a strike
         if white_body:
@@ -57,7 +59,25 @@ class PhysicsSimulator:
         while moving:
             space.step(1/60.0)
             moving = False
-            # Continue the hit simulation if a ball is still going fast enough
+            
+            # Pygame simulation
+            if display and screen and clock:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        exit()
+                        
+                screen.fill((34, 100, 34))
+                for px, py in self.pockets:
+                    pygame.draw.circle(screen, (10, 10, 10), (int(px), int(py)), int(self.pocket_radius))
+                for body, color in body_colors.items():
+                    pygame.draw.circle(screen, color, (int(body.position.x), int(body.position.y)), 10)
+                    
+                pygame.display.flip()
+                clock.tick(60) # Lock to 60 FPS to be watchable
+
+            # Continue simulation if any ball still has enough motion
+            moving = False
             for body in space.bodies:
                 if body.body_type == pymunk.Body.DYNAMIC and body.velocity.length > 2.0:
                     moving = True
