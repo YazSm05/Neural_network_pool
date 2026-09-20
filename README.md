@@ -22,7 +22,7 @@ It runs a fixed-step simulation (1/60.0) continuously until all balls stop movin
 
 Real-time distance checks handle pocketing to prevent bounding-box collision bugs (tunneling) against the cushions.
 
-3. The Evolution (Genetic Algorithm)
+# The Evolution (Genetic Algorithm)
 Population: 100 random neural networks are spawned in Generation 1.
 
 Fitness Score: Agents are heavily penalized for scratching (-1000) or potting the 8-ball early (-5000), and rewarded for potting their assigned balls (+1000).
