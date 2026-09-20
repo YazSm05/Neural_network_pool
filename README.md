@@ -33,9 +33,10 @@ Selection & Mutation: The top 10% of agents pass directly to the next generation
 You will need Python 3.x and a few dependencies.
 
 # Clone the repository
+```terminal
 git clone [your-repo-link]
 cd [your-repo-folder]
-
+```
 # Install required libraries
 pip install numpy pygame pymunk
 Usage
@@ -46,14 +47,18 @@ python First_trial.py
 What to expect:
 When you run the script, the terminal will instantly output the background calculations for the first generation. Once the 100 networks have been evaluated, a pygame window will pop up showing a real-time replay of the Generation Champion's shot (best score and not most balls potted). The window will then instantly reset to train the next generation.
 
-Configuration & Tweaks
-Fixed vs. Dynamic Tables
-By default, the training generates a completely new random table layout for every generation. This forces the AI to learn generalized pool physics rather than memorizing a single shot.
+# Configuration & Tweaks
+## Fixed vs. Dynamic Tables
+By default, the training doesn't generate a completely new random table layout for every generation. 
+A dynamic table would force the AI to learn generalized pool physics rather than memorizing a single shot.
 
-## If you want to watch the AI perfect a single trick shot on a static layout, you can lock the table generation seed in the main() function:
-generation_seed = 42
+To turn the fixed table to dynamic table, you just need to replace:
 
-for nn in ga.population:
-    random.seed(generation_seed) # Forces the exact same table layout every time
-    env = BilliardEnvironment()
-    # ...
+```python
+def main():
+    # Delete generation_seed = 42
+    while True:
+    generation_seed = random.randint(0, 1000000) # Add this line
+    #...
+
+```
