@@ -2,7 +2,6 @@ import numpy as np
 import copy
 import math
 import pygame
-import sys
 import random
 import pygame
 from Physics_engine import PhysicsSimulator
@@ -32,7 +31,7 @@ class NeuralNetwork:
 
     angle = (output[0][0] + 1.0) * 180.0 
     force = (output[1][0] + 1.0) * 50.0
-
+    
     return angle, force
     
   def mutate(self, rate=0.05):
@@ -133,10 +132,6 @@ class BilliardEnvironment:
     """
     self.shot_force = force_percent
     
-    if self.shot_force < 5.0:
-        self.is_alive = False
-        return
-
     # =================================================================
     # Physics engine
     self.simulator.run_shot(
@@ -212,8 +207,8 @@ def main():
 
   print("Starting pool training... (Headless mode)")
 
+  generation_seed = 42
   while True:
-    generation_seed = random.randint(0, 1000000)
     
     for nn in ga.population:
       random.seed(generation_seed)
@@ -226,13 +221,13 @@ def main():
     ga.population.sort(key=lambda x: x.score, reverse=True)
     best_nn = ga.population[0]
 
-    print(f"Gen: {generation} | Best Score: {best_nn.score:,.2f} | Potted my balls: {7 - env.my_balls_remaining}")
-
     # Visualising the top AI game of this generation
     random.seed(generation_seed)
     demo_env = BilliardEnvironment()
     angle, force = best_nn.feed_forward(demo_env.get_inputs())
     demo_env.play_shot(angle, force, display=True, screen=screen, clock=clock)
+    
+    print(f"Gen: {generation} | Best Score: {best_nn.score:,.2f} | Potted my balls: {7 - env.my_balls_remaining}")
     
     ga.evolve()
     generation += 1
