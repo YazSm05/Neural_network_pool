@@ -32,7 +32,6 @@ Selection & Mutation: The top 10% of agents (the elite) pass directly to the nex
 ## Installation
 You will need Python 3.x and a few dependencies.
 
-Bash
 # Clone the repository
 git clone [your-repo-link]
 cd [your-repo-folder]
@@ -45,19 +44,18 @@ Run the main script to start the training loop:
 Bash
 python First_trial.py
 What to expect:
-When you run the script, the terminal will instantly output the background calculations for the first generation. Once the 100 networks have been evaluated, a pygame window will pop up showing a real-time replay of the Generation Champion's shot. The window will then instantly reset to train the next generation.
+When you run the script, the terminal will instantly output the background calculations for the first generation. Once the 100 networks have been evaluated, a pygame window will pop up showing a real-time replay of the Generation Champion's shot (best score and not most balls potted). The window will then instantly reset to train the next generation.
 
 Configuration & Tweaks
 Fixed vs. Dynamic Tables
 By default, the training generates a completely new random table layout for every generation. This forces the AI to learn generalized pool physics rather than memorizing a single shot.
 
-If you want to watch the AI perfect a single trick shot on a static layout, you can lock the table generation seed in the main() function:
+## If you want to watch the AI perfect a single trick shot on a static layout, you can lock the table generation seed in the main() function:
 
-Python
 # In main()
-fixed_seed = 42
+generation_seed = 42
 
 for nn in ga.population:
-    random.seed(fixed_seed) # Forces the exact same table layout every time
+    random.seed(generation_seed) # Forces the exact same table layout every time
     env = BilliardEnvironment()
     # ...
