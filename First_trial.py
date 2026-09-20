@@ -5,7 +5,7 @@ import pygame
 import sys
 import random
 import pygame
-from physics_engine import PhysicsSimulator
+from Physics_engine import PhysicsSimulator
 
 #NeuralNetwork(32, 128, 2) for input: 16 balls with 2 coords, outputs: hit force and direction, 128 hidden layers for deep learning
 class NeuralNetwork:
