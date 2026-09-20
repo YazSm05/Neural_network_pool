@@ -1,5 +1,6 @@
 import math
 import pymunk 
+import pygame
 
 class PhysicsSimulator:
     def __init__(self, pool_w, pool_h, pockets, pocket_radius):
