@@ -125,7 +125,7 @@ class BilliardEnvironment:
     
     return inputs
 
-  def play_shot(self, angle_deg, display=False, screen=None, clock=None, force_percent):
+  def play_shot(self, angle_deg, force_percent, display=False, screen=None, clock=None):
     """
       Simule l'impact de la queue de billard et le mouvement des billes.
     """
