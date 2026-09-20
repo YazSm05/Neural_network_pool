@@ -32,6 +32,8 @@ class NeuralNetwork:
 
     angle = (output[0][0] + 1.0) * 180.0 
     force = (output[1][0] + 1.0) * 50.0
+
+    return angle, force
     
   def mutate(self, rate=0.05):
     mutate_inputtohid = np.random.rand(*self.w_inputtohid.shape) < rate
