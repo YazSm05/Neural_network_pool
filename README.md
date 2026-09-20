@@ -27,7 +27,7 @@ Population: 100 random neural networks are spawned in Generation 1.
 
 Fitness Score: Agents are heavily penalized for scratching (-1000) or potting the 8-ball early (-5000), and rewarded for potting their assigned balls (+1000).
 
-Selection & Mutation: The top 10% of agents (the elite) pass directly to the next generation. The remaining 90% are cloned from the elites with a 5% Gaussian mutation rate applied to their weights.
+Selection & Mutation: The top 10% of agents pass directly to the next generation. The remaining 90% are cloned from the top with a 5% Gaussian mutation rate applied to their weights.
 
 ## Installation
 You will need Python 3.x and a few dependencies.
