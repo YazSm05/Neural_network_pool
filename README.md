@@ -51,8 +51,6 @@ Fixed vs. Dynamic Tables
 By default, the training generates a completely new random table layout for every generation. This forces the AI to learn generalized pool physics rather than memorizing a single shot.
 
 ## If you want to watch the AI perfect a single trick shot on a static layout, you can lock the table generation seed in the main() function:
-
-# In main()
 generation_seed = 42
 
 for nn in ga.population:
